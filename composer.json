@@ -9,7 +9,6 @@
             "email": "44943708+Musti132@users.noreply.github.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0"
     },
