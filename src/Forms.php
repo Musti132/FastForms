@@ -6,14 +6,19 @@ Class Forms{
 
     static protected $form;
     static protected $form_end = "</form>";
+    static protected $tags;
 
     protected static function parse(array $tags, array $form_data){
+        self::$tags = $tags;
         $inputs = [];
         $inputs[0] = [self::setForm($form_data)];
         $keys = array_keys($tags);
         $counter = 0;
 
         foreach($tags as $tag => $value){
+            if($tag == "form"){
+                continue;
+            }
             if(method_exists(self::class, "$tag")){
                 $inputs[] = self::$tag($value);
             }
@@ -36,7 +41,6 @@ Class Forms{
         $end = "";
         $html = "";
         $start = false;
-
         if($tag != "input"){
             $end = "</$tag>";
         }
@@ -95,7 +99,15 @@ Class Forms{
     }
 
     protected static function setForm($data){
-        return self::$form = '<form method="'.$data['method'].'" action="'.$data['action'].'">';
+
+        if(isset(self::$tags['form'])){
+            $output = implode(', ', array_map(
+                function ($v, $k) { return sprintf(" %s=\"%s\"", $k, $v); },
+                self::$tags['form'],
+                array_keys(self::$tags['form'])
+            ));
+        }
+        return self::$form = '<form method="'.$data['method'].'" action="'.$data['action'].'"'.$output.'>';
     }
 }
 
