@@ -47,8 +47,8 @@ Class Forms{
         }
         $output = "";
         $classes = null;
-        if(isset($views['classes'])){
-            $classes = implode(' ', $views['classes']);
+        if(isset($views['class'])){
+            $classes = implode(' ', $views['class']);
         }
         $output = ($classes != null) ? ' class="'.$classes.'"' : '';
 
@@ -56,7 +56,7 @@ Class Forms{
             if($data == "tag"){
                 continue;
             }
-            if($data == "classes"){
+            if($data == "class"){
                 continue;
             }
             if($counter > 0){
@@ -89,8 +89,8 @@ Class Forms{
         $name = isset($attributes['name']) ? $attributes['name'] : 'submit';
         $value = isset($attributes['value']) ? "value=\"".$attributes['value']."\"" : '';
 
-        if(isset($attributes['classes'])){
-            $classes = implode(' ', $attributes['classes']);
+        if(isset($attributes['class'])){
+            $classes = implode(' ', $attributes['class']);
             return '<input type="submit" name="'.$name.'" class="'.$classes.'" '.$value.'>';
         }
 
@@ -100,8 +100,8 @@ Class Forms{
     protected static function username(array $attributes = null){
         $name = !isset($attributes['name']) ? 'username' : $attributes['name'];
 
-        if(isset($attributes['classes'])){
-            $classes = implode(' ', $attributes['classes']);
+        if(isset($attributes['class'])){
+            $classes = implode(' ', $attributes['class']);
             return '<input type="text" name="'.$name.'" class="'.$classes.'">';
         }
 
