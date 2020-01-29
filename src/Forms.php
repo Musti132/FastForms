@@ -4,6 +4,7 @@ namespace FastForms;
 
 Class Forms{
 
+    
     static protected $form;
     static protected $form_end = "</form>";
     static protected $tags;
