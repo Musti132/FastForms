@@ -4,7 +4,7 @@ namespace FastForms;
 
 Class Forms{
 
-    
+
     static protected $form;
     static protected $form_end = "</form>";
     static protected $tags;
@@ -45,16 +45,25 @@ Class Forms{
         if($tag != "input"){
             $end = "</$tag>";
         }
+        $output = "";
+        $classes = null;
+        if(isset($views['classes'])){
+            $classes = implode(' ', $views['classes']);
+        }
+        $output = ($classes != null) ? ' class="'.$classes.'"' : '';
 
         foreach($views as $data => $value){
             if($data == "tag"){
+                continue;
+            }
+            if($data == "classes"){
                 continue;
             }
             if($counter > 0){
                 $start = true;
             }
             if(!$start){
-                $html .= "<".$tag." ".$data.'="'.$value.'" ';
+                $html .= "<".$tag." ".$data.'="'.$value.'"'.$output.' ';
             }
             else{
                 $html .= $data.'="'.$value.'"';
@@ -100,7 +109,7 @@ Class Forms{
     }
 
     protected static function setForm($data){
-
+        $output = "";
         if(isset(self::$tags['form'])){
             $output = implode(', ', array_map(
                 function ($v, $k) { return sprintf(" %s=\"%s\"", $k, $v); },
