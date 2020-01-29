@@ -7,7 +7,7 @@ Class Forms{
     static protected $form;
     static protected $form_end = "</form>";
 
-    protected function parse(array $tags, array $form_data){
+    protected static function parse(array $tags, array $form_data){
         $inputs = [];
         $inputs[0] = [self::setForm($form_data)];
         $keys = array_keys($tags);
@@ -27,7 +27,7 @@ Class Forms{
         return self::flatten_array($inputs);
     }
 
-    protected function convert_to_tags(array $views){
+    protected static function convert_to_tags(array $views){
         $inputs = [];
         $keys = array_keys($views);
         $tag = $views['tag'];
@@ -71,7 +71,7 @@ Class Forms{
         return $flattened_array;
     }
 
-    protected function submit(array $attributes = null){
+    protected static function submit(array $attributes = null){
         $name = isset($attributes['name']) ? $attributes['name'] : 'submit';
         $value = isset($attributes['value']) ? "value=\"".$attributes['value']."\"" : '';
 
@@ -83,7 +83,7 @@ Class Forms{
         return '<input type="submit" name="'.$name.'" '.$value.'>';
     }
 
-    protected function username(array $attributes = null){
+    protected static function username(array $attributes = null){
         $name = !isset($attributes['name']) ? 'username' : $attributes['name'];
 
         if(isset($attributes['classes'])){
@@ -94,7 +94,7 @@ Class Forms{
         return '<input type="text" name="'.$name.'">';
     }
 
-    protected function setForm($data){
+    protected static function setForm($data){
         return self::$form = '<form method="'.$data['method'].'" action="'.$data['action'].'">';
     }
 }
