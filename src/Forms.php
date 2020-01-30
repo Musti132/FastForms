@@ -88,7 +88,6 @@ Class Forms{
     protected static function submit(array $attributes = null){
         $name = isset($attributes['name']) ? $attributes['name'] : 'submit';
         $value = isset($attributes['value']) ? "value=\"".$attributes['value']."\"" : '';
-
         if(isset($attributes['class'])){
             $classes = implode(' ', $attributes['class']);
             return '<input type="submit" name="'.$name.'" class="'.$classes.'" '.$value.'>';
@@ -111,11 +110,19 @@ Class Forms{
     protected static function setForm($data){
         $output = "";
         if(isset(self::$tags['form'])){
-            $output = implode(', ', array_map(
-                function ($v, $k) { return sprintf(" %s=\"%s\"", $k, $v); },
+            $output = implode(' ', array_map(
+                function ($v, $k) {
+                    if($k != "class"){
+                        return sprintf(" %s=\"%s\"", $k, $v); 
+                    }
+                },
                 self::$tags['form'],
                 array_keys(self::$tags['form'])
             ));
+        }
+        if(isset(self::$tags['form']['class'])){
+            $classes = implode(' ', self::$tags['form']['class']);
+            return self::$form = '<form method="'.$data['method'].'" action="'.$data['action'].'" class="'.$classes.'"'.$output.'>';
         }
         return self::$form = '<form method="'.$data['method'].'" action="'.$data['action'].'"'.$output.'>';
     }
